@@ -12,6 +12,13 @@
         public static Dictionary<string, Command> Commands = new Dictionary<string, Command>();
         static ArgumentsHandler()
         {
+            Commands.Add("help",
+                new Command("help",
+                    "--help; -h",
+                    "Display this help message",
+                    Arguments.Help.Handler
+                )
+            );
         }
     }
 }
