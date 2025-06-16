@@ -52,7 +52,18 @@
                 );
             }
 
-            HashSet<string> invokedHandlers = new HashSet<string>();
+            success = InvokeFlagCommands(args, ref inputFilePath, ref fileType, ref outputDir, ref outputText, out HashSet<string> invokedHandlers);
+
+            if (invokedHandlers.Count == 0)
+                outputText = $"Error: No valid arguments provided.\n{outputText}";
+
+            return success;
+        }
+
+        private static bool InvokeFlagCommands(string[] args, ref string inputFilePath, ref string fileType, ref string outputDir, ref string? outputText, out HashSet<string> invokedHandlers)
+        {
+            invokedHandlers = new HashSet<string>();
+
             foreach (KeyValuePair<string, Command> cmdEntry in Commands)
             {
                 string[] aliases = cmdEntry.Value.Aliases.Split(';');
@@ -65,7 +76,7 @@
                     {
                         if (invokedHandlers.Contains(cmdEntry.Key))
                             continue;
-                        
+
                         invokedHandlers.Add(cmdEntry.Key);
 
                         bool result = cmdEntry.Value.Handler(
@@ -78,13 +89,22 @@
                         if (!result)
                         {
                             outputText += $"{handlerOutput}\n";
-                            success = false;
+                            return false;
                         }
+
+                        if (!string.IsNullOrWhiteSpace(parsedInputFilePath))
+                            inputFilePath = parsedInputFilePath;
+
+                        if (!string.IsNullOrWhiteSpace(parsedFileType))
+                            fileType = parsedFileType;
+
+                        if (!string.IsNullOrWhiteSpace(parsedOutputDir))
+                            outputDir = parsedOutputDir;
                     }
                 }
             }
 
-            return success;
+            return true;
         }
     }
 }
