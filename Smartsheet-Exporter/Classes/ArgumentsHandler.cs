@@ -26,6 +26,14 @@
                     Arguments.Version.Handler
                 )
             );
+            Commands.Add("token",
+                new Command(
+                    Token.Name,
+                    Token.FlagsString,
+                    Token.Description,
+                    Token.Handler
+                )
+            );
         }
 
         public static bool HandleArguments(
