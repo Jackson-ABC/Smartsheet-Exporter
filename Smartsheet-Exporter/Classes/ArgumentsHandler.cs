@@ -36,6 +36,13 @@ namespace Smartsheet_Exporter.Classes
                     Token.Handler
                 )
             );
+            // TODO: --ouput.path, -op; --sheet.id, -si;
+            // Standard handling should:
+            // - Get a sheet
+            // - Sheet summary
+            // - Export last 50 rows created, as a CSV?
+            //      --> Cannot get whole sheet every time, as this is way too many requests at once
+            // - 
         }
 
         public static bool HandleArguments(
