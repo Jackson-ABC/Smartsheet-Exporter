@@ -1,4 +1,6 @@
-﻿namespace Smartsheet_Exporter.Classes
+﻿using Smartsheet_Exporter.Classes.Arguments;
+
+namespace Smartsheet_Exporter.Classes
 {
     public class ParsedArguments
     {
@@ -38,29 +40,30 @@
 
         public static bool HandleArguments(
             string[] args,
-            out string? inputFilePath,
-            out string? fileType,
+            out string? smartsheetAccessToken,
+            out string? smartsheetSheetId,
             out string? outputDir,
             out string? outputText
         )
         {
-            inputFilePath = null;
-            fileType = null;
+            smartsheetAccessToken = null;
+            smartsheetSheetId = null;
             outputDir = null;
             outputText = null;
             bool success = true;
 
             if (args.Contains("--help") || args.Contains("-h"))
             {
-                return Commands["help"].Handler(args,
-                    out inputFilePath,
-                    out fileType,
+                return Commands["help"].Handler(
+                    args,
+                    out smartsheetAccessToken,
+                    out smartsheetSheetId,
                     out outputDir,
                     out outputText
                 );
             }
 
-            success = InvokeFlagCommands(args, ref inputFilePath, ref fileType, ref outputDir, ref outputText, out HashSet<string> invokedHandlers);
+            success = InvokeFlagCommands(args, ref smartsheetAccessToken, ref smartsheetSheetId, ref outputDir, ref outputText, out HashSet<string> invokedHandlers);
 
             if (!success)
             {
@@ -73,7 +76,7 @@
             return success;
         }
 
-        private static bool InvokeFlagCommands(string[] args, ref string inputFilePath, ref string fileType, ref string outputDir, ref string? outputText, out HashSet<string> invokedHandlers)
+        private static bool InvokeFlagCommands(string[] args, ref string smartsheetAccessToken, ref string smartsheetSheetId, ref string outputDir, ref string? outputText, out HashSet<string> invokedHandlers)
         {
             invokedHandlers = new HashSet<string>();
 
@@ -106,10 +109,10 @@
                         }
 
                         if (!string.IsNullOrWhiteSpace(parsedInputFilePath))
-                            inputFilePath = parsedInputFilePath;
+                            smartsheetAccessToken = parsedInputFilePath;
 
                         if (!string.IsNullOrWhiteSpace(parsedFileType))
-                            fileType = parsedFileType;
+                            smartsheetSheetId = parsedFileType;
 
                         if (!string.IsNullOrWhiteSpace(parsedOutputDir))
                             outputDir = parsedOutputDir;
