@@ -54,8 +54,13 @@
 
             success = InvokeFlagCommands(args, ref inputFilePath, ref fileType, ref outputDir, ref outputText, out HashSet<string> invokedHandlers);
 
-            if (invokedHandlers.Count == 0)
-                outputText = $"Error: No valid arguments provided.\n{outputText}";
+            if (!success)
+            {
+                if(invokedHandlers.Count == 0)
+                    outputText = $"Error: No valid arguments provided.\n{outputText}";
+                
+                return success;
+            }
 
             return success;
         }
@@ -104,7 +109,7 @@
                 }
             }
 
-            return true;
+            return invokedHandlers.Count > 0;
         }
     }
 }
