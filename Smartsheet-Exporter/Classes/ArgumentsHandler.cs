@@ -73,6 +73,8 @@ namespace Smartsheet_Exporter.Classes
                 return success;
             }
 
+            success = HandleUnspecifiedVals(args, ref smartsheetAccessToken, ref smartsheetSheetId, ref outputDir, ref outputText);
+
             return success;
         }
 
@@ -121,6 +123,35 @@ namespace Smartsheet_Exporter.Classes
             }
 
             return invokedHandlers.Count > 0;
+        }
+
+        private static bool HandleUnspecifiedVals(string[] args, ref string smartsheetAccessToken, ref string smartsheetSheetId, ref string outputDir, ref string? outputText)
+        {
+            if (string.IsNullOrWhiteSpace(smartsheetAccessToken))
+            {
+                smartsheetAccessToken = Token.Value;
+            }
+
+            if (string.IsNullOrWhiteSpace(smartsheetSheetId))
+            {
+                // NOTE: Make the below call directly to SheetId
+                outputText += "Error: Sheet ID not set.\n";
+                outputText += "Please specify Sheet ID";
+
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(outputDir))
+            {
+                outputDir = System.IO.Directory.GetCurrentDirectory();
+
+                outputText += "Warning: Output directory path not specified.\n";
+                outputText += $"Using: {outputDir}";
+
+                return false;
+            }
+
+            return true;
         }
     }
 }
