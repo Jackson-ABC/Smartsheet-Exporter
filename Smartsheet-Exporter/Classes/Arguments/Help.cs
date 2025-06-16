@@ -17,10 +17,12 @@
 
             if(args.Length > 1)
             {
-                string knownCommands = "Argument Help:\n";
+                string knownCommands = "";
+                string knownCommandsHeader = "Argument Help:\n";
                 knownCommands += "==============\n";
 
-                string unknownCommands = "Unknown Commands:\n";
+                string unknownCommands = "";
+                string unknownCommandsHeader = "Unknown Commands:\n";
                 unknownCommands += "=================\n";
 
                 foreach (string arg in args)
@@ -35,8 +37,17 @@
                         unknownCommands += $"{arg}\n";
                 }
 
-                if (knownCommands.Length > 0 || unknownCommands.Length > 0)
-                    outputText = knownCommands + unknownCommands;
+                if (knownCommands.Length > 0)
+                {
+                    outputText += knownCommandsHeader;
+                    outputText += knownCommands;
+                }
+
+                if (unknownCommands.Length > 0)
+                {
+                    outputText += unknownCommandsHeader;
+                    outputText += unknownCommands;
+                }
             }
 
             if (outputText.Length == 0)
