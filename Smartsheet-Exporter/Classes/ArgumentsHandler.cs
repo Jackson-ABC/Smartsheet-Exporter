@@ -23,7 +23,7 @@
                 new Command("version",
                     "--version; -v",
                     "Display the version of the program",
-                    VersionHandler
+                    Arguments.Version.Handler
                 )
             );
         }
