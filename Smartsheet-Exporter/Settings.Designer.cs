@@ -31,5 +31,26 @@ namespace Smartsheet_Exporter {
                 return ((string)(this["CurrentVersion"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("!NotSet!")]
+        public string SmartsheetAccessToken {
+            get {
+                return ((string)(this["SmartsheetAccessToken"]));
+            }
+            set {
+                this["SmartsheetAccessToken"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Smartsheet-Exporter.exe")]
+        public string ProgramName {
+            get {
+                return ((string)(this["ProgramName"]));
+            }
+        }
     }
 }
