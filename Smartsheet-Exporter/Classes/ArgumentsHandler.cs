@@ -27,5 +27,33 @@
                 )
             );
         }
+
+        public static bool HandleArguments(
+            string[] args,
+            out string? inputFilePath,
+            out string? fileType,
+            out string? outputDir,
+            out string? outputText
+        )
+        {
+            inputFilePath = null;
+            fileType = null;
+            outputDir = null;
+            outputText = null;
+            bool success = true;
+
+            if (args.Contains("--help") || args.Contains("-h"))
+            {
+                Commands["help"].Handler(args,
+                    out inputFilePath,
+                    out fileType,
+                    out outputDir,
+                    out outputText
+                );
+                return success;
+            }
+
+            return success;
+        }
     }
 }
