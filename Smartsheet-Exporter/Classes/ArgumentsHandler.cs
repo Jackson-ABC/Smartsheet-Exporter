@@ -44,13 +44,12 @@
 
             if (args.Contains("--help") || args.Contains("-h"))
             {
-                Commands["help"].Handler(args,
+                return Commands["help"].Handler(args,
                     out inputFilePath,
                     out fileType,
                     out outputDir,
                     out outputText
                 );
-                return success;
             }
 
             HashSet<string> invokedHandlers = new HashSet<string>();
