@@ -19,6 +19,13 @@
                     Arguments.Help.Handler
                 )
             );
+            Commands.Add("version",
+                new Command("version",
+                    "--version; -v",
+                    "Display the version of the program",
+                    VersionHandler
+                )
+            );
         }
     }
 }
