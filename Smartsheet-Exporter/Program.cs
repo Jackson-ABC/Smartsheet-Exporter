@@ -1,24 +1,20 @@
-﻿namespace Smartsheet_Exporter
+﻿using Smartsheet_Exporter.Classes;
+
+namespace Smartsheet_Exporter
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            if (args.Length == 0)
-            {
-                // Display help
-                return;
-            }
+            Console.WriteLine("Smartsheet Exporter - Command Line Interface");
+            Console.WriteLine("============================================");
+            Console.WriteLine("A tool for exporting data from smartsheet to enable tracking in git");
+            Console.WriteLine();
 
-            if (args.Contains("-h") || args.Contains("--help"))
+            if (!ArgumentsHandler.HandleArguments(args, out string? inputFilePath, out string? fileType, out string? outputDir, out string? outputText))
             {
-                foreach (string arg in args)
-                {
-                    // if arg exists
-                    // Return arg help
-                    // else
-                    // Return $"Error. {arg} is not a valid argument"
-                }
+                Console.WriteLine(outputText);
+                return;
             }
         }
     }
