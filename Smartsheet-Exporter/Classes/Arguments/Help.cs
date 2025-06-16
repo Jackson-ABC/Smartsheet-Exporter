@@ -2,7 +2,7 @@
 {
     internal static class Help
     {
-        public static string Handler(
+        public static bool Handler(
             string[] args,
             out string? parsedInputFilePath,
             out string? parsedFileType,
@@ -55,7 +55,7 @@
                 }
             }
 
-            return outputText;
+            return false;
         }
     }
 }
