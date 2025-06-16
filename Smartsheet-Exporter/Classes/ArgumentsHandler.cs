@@ -53,6 +53,38 @@
                 return success;
             }
 
+            HashSet<string> invokedHandlers = new HashSet<string>();
+            foreach (KeyValuePair<string, Command> cmdEntry in Commands)
+            {
+                string[] aliases = cmdEntry.Value.Aliases.Split(';');
+                foreach (var alias in aliases)
+                {
+                    string trimmedAlias = alias.Trim();
+                    int index = Array.IndexOf(args, trimmedAlias);
+
+                    if (index != -1)
+                    {
+                        if (invokedHandlers.Contains(cmdEntry.Key))
+                            continue;
+                        
+                        invokedHandlers.Add(cmdEntry.Key);
+
+                        bool result = cmdEntry.Value.Handler(
+                            args,
+                            out string parsedInputFilePath,
+                            out string parsedFileType,
+                            out string parsedOutputDir,
+                            out string handlerOutput
+                        );
+                        if (!result)
+                        {
+                            outputText += $"{handlerOutput}\n";
+                            success = false;
+                        }
+                    }
+                }
+            }
+
             return success;
         }
     }
